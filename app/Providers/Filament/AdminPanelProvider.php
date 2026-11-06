@@ -10,7 +10,6 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -31,10 +30,6 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('YISI | CMS')
             ->login()
             ->profile()
-            ->multiFactorAuthentication(
-                [AppAuthentication::make()->brandName('YISI')],
-                isRequired: fn (): bool => auth()->user()?->role === 'admin',
-            )
             ->colors([
                 'primary' => Color::Green,
             ])
