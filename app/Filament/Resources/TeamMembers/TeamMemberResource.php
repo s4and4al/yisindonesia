@@ -4,6 +4,7 @@ namespace App\Filament\Resources\TeamMembers;
 
 use App\Filament\Resources\TeamMembers\Pages\ManageTeamMembers;
 use App\Filament\Concerns\AllowsEditors;
+use App\Filament\Concerns\UsesMediaUpload;
 use App\Models\TeamMember;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
@@ -30,6 +31,7 @@ class TeamMemberResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     use AllowsEditors;
+    use UsesMediaUpload;
 
     protected static string|UnitEnum|null $navigationGroup = 'Profil YISI';
 
@@ -43,7 +45,7 @@ class TeamMemberResource extends Resource
                 TextInput::make('position')->label('Jabatan')->required()->maxLength(150),
                 TextInput::make('group_name')->label('Kelompok')->placeholder('Organ Yayasan, Manajemen, Divisi')->required()->maxLength(80),
                 TextInput::make('division')->label('Divisi')->maxLength(190),
-                Select::make('photo_media_id')->label('Foto')->relationship('photo', 'file_name')->searchable()->preload(),
+                static::mediaUpload('photo_media_id', 'Foto', 'Foto anggota tim'),
                 TextInput::make('sort_order')->label('Urutan tampil')->numeric()->default(0)->required(),
                 Toggle::make('is_visible')->label('Tampilkan di website')->default(true),
                 MarkdownEditor::make('bio')->label('Biografi singkat')->columnSpanFull(),

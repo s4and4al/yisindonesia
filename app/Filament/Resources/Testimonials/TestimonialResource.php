@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Testimonials;
 
 use App\Filament\Concerns\AllowsEditors;
+use App\Filament\Concerns\UsesMediaUpload;
 use App\Filament\Resources\Testimonials\Pages\ManageTestimonials;
 use App\Models\Testimonial;
 use BackedEnum;
@@ -30,6 +31,7 @@ class TestimonialResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedStar;
 
     use AllowsEditors;
+    use UsesMediaUpload;
 
     protected static string|UnitEnum|null $navigationGroup = 'Interaksi pengunjung';
 
@@ -49,7 +51,7 @@ class TestimonialResource extends Resource
                     'lainnya' => 'Lainnya',
                 ]),
                 TextInput::make('social_url')->label('Tautan sosial media')->url()->maxLength(300)->placeholder('https://...'),
-                Select::make('photo_media_id')->label('Foto')->relationship('photo', 'file_name')->searchable()->preload(),
+                static::mediaUpload('photo_media_id', 'Foto', 'Foto testimoni'),
                 Select::make('status')->label('Status')->options([
                     'pending' => 'Menunggu tinjauan',
                     'approved' => 'Disetujui',

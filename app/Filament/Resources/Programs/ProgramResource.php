@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Programs;
 
+use App\Filament\Concerns\UsesMediaUpload;
 use App\Filament\Resources\Programs\Pages\ManagePrograms;
 use App\Models\Program;
 use BackedEnum;
@@ -25,6 +26,8 @@ use UnitEnum;
 
 class ProgramResource extends Resource
 {
+    use UsesMediaUpload;
+
     protected static ?string $model = Program::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
@@ -45,7 +48,7 @@ class ProgramResource extends Resource
                 MarkdownEditor::make('focus_activity')->label('Fokus kegiatan (Markdown)')->columnSpanFull(),
                 TextInput::make('location')->label('Lokasi')->maxLength(220),
                 TextInput::make('province')->label('Provinsi')->maxLength(80),
-                Select::make('cover_media_id')->label('Gambar utama')->relationship('coverMedia', 'file_name')->searchable()->preload(),
+                static::mediaUpload('cover_media_id', 'Gambar utama', 'Gambar utama program'),
                 TextInput::make('year_start')->label('Tahun mulai')->numeric()->minValue(2000)->maxValue(2100)->required(),
                 TextInput::make('year_end')->label('Tahun selesai')->numeric()->minValue(2000)->maxValue(2100),
                 Select::make('status')->label('Status program')->options([
@@ -53,8 +56,8 @@ class ProgramResource extends Resource
                     'ongoing' => 'Berjalan',
                     'completed' => 'Selesai',
                 ])->required()->default('completed'),
-                Select::make('pillars')->label('Pilar')->relationship()->multiple()->preload()->searchable(),
-                Select::make('partners')->label('Mitra')->relationship()->multiple()->preload()->searchable(),
+                Select::make('pillars')->label('Pilar')->relationship('pillars', 'name')->multiple()->preload()->searchable(),
+                Select::make('partners')->label('Mitra')->relationship('partners', 'name')->multiple()->preload()->searchable(),
                 MarkdownEditor::make('impact_summary')->label('Hasil dan pembelajaran (Markdown)')->columnSpanFull(),
                 Select::make('publish_status')->label('Status publikasi')->options([
                     'draft' => 'Draf',

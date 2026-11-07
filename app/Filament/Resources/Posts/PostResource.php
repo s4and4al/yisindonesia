@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Posts;
 
+use App\Filament\Concerns\UsesMediaUpload;
 use App\Filament\Resources\Posts\Pages\ManagePosts;
 use App\Models\Post;
 use BackedEnum;
@@ -29,6 +30,8 @@ use UnitEnum;
 
 class PostResource extends Resource
 {
+    use UsesMediaUpload;
+
     protected static ?string $model = Post::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
@@ -61,11 +64,7 @@ class PostResource extends Resource
                     ->label('Isi artikel (Markdown)')
                     ->required()
                     ->columnSpanFull(),
-                Select::make('cover_media_id')
-                    ->label('Gambar utama')
-                    ->relationship('coverMedia', 'file_name')
-                    ->searchable()
-                    ->preload(),
+                static::mediaUpload('cover_media_id', 'Gambar utama', 'Gambar utama artikel'),
                 Select::make('category_id')
                     ->label('Kategori')
                     ->relationship('category', 'name')

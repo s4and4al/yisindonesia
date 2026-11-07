@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Partners;
 
 use App\Filament\Resources\Partners\Pages\ManagePartners;
 use App\Filament\Concerns\AllowsEditors;
+use App\Filament\Concerns\UsesMediaUpload;
 use App\Models\Partner;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
@@ -29,6 +30,7 @@ class PartnerResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     use AllowsEditors;
+    use UsesMediaUpload;
 
     protected static string|UnitEnum|null $navigationGroup = 'Konten';
 
@@ -49,7 +51,7 @@ class PartnerResource extends Resource
                     'akademisi' => 'Akademisi',
                     'komunitas' => 'Komunitas',
                 ]),
-                Select::make('logo_media_id')->label('Logo')->relationship('logo', 'file_name')->searchable()->preload(),
+                static::mediaUpload('logo_media_id', 'Logo', 'Logo mitra'),
                 Toggle::make('show_logo')->label('Izin tertulis untuk menampilkan logo telah diperoleh')->default(false),
             ]);
     }
