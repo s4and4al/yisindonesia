@@ -71,8 +71,8 @@ class PostResource extends Resource
                     ->relationship('category', 'name')
                     ->searchable()
                     ->preload(),
-                Select::make('tags')->label('Tag')->relationship()->multiple()->searchable()->preload(),
-                Select::make('programs')->label('Program terkait')->relationship()->multiple()->searchable()->preload(),
+                Select::make('tags')->label('Tag')->relationship('tags', 'name')->multiple()->searchable()->preload(),
+                Select::make('programs')->label('Program terkait')->relationship('programs', 'title')->multiple()->searchable()->preload(),
                 Select::make('author_id')
                     ->label('Penulis')
                     ->relationship('author', 'name')
