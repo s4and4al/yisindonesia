@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\PostViewsChart;
 use App\Filament\Widgets\TopPosts;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -44,6 +45,7 @@ class AdminPanelProvider extends PanelProvider
                 AccountWidget::class,
                 FilamentInfoWidget::class,
                 TopPosts::class,
+                PostViewsChart::class,
             ])
             ->middleware([
                 EncryptCookies::class,
