@@ -11,7 +11,6 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -60,9 +59,10 @@ class PostResource extends Resource
                     ->rows(3)
                     ->maxLength(400)
                     ->columnSpanFull(),
-                MarkdownEditor::make('content')
+                Textarea::make('content')
                     ->label('Isi artikel (Markdown)')
                     ->required()
+                    ->rows(14)
                     ->columnSpanFull(),
                 static::mediaUpload('cover_media_id', 'Gambar utama', 'Gambar utama artikel'),
                 Select::make('category_id')
