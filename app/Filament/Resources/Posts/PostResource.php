@@ -113,6 +113,7 @@ class PostResource extends Resource
                     default => 'gray',
                 }),
                 TextColumn::make('published_at')->label('Tanggal terbit')->dateTime('d M Y')->sortable()->placeholder('Belum dijadwalkan'),
+                TextColumn::make('view_count')->label('Dibaca')->numeric()->sortable(),
                 TextColumn::make('author.name')->label('Penulis')->placeholder('—'),
             ])
             ->filters([
