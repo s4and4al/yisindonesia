@@ -2,6 +2,9 @@
 @section('title', ($post->seo_title ?: $post->title).' — YISI')
 @section('description', $post->seo_description ?: ($post->excerpt ?? ''))
 @section('og_type', 'article')
+@if ($post->coverMedia && $post->coverMedia->consent_ok && str_starts_with($post->coverMedia->mime_type, 'image/'))
+    @section('og_image', \Illuminate\Support\Facades\Storage::url($post->coverMedia->url))
+@endif
 @section('content')
     <article>
         <header class="bg-[#eaf0e7] py-10 sm:py-14"><div class="container-wide max-w-4xl"><a href="{{ route('news.index') }}" class="text-sm font-bold text-[#17633f] no-underline">← Semua berita</a><p class="eyebrow mt-7">{{ $post->category?->name ?? 'Jurnal YISI' }} · {{ $post->published_at?->translatedFormat('d F Y') }}</p><h1 class="serif mt-4 text-5xl leading-[1.04] text-[#143d2b] sm:text-7xl">{{ $post->title }}</h1>@if ($post->excerpt)<p class="mt-6 text-xl leading-8 text-[#52645a]">{{ $post->excerpt }}</p>@endif@if ($post->coverMedia && $post->coverMedia->consent_ok && str_starts_with($post->coverMedia->mime_type, 'image/'))<img src="{{ \Illuminate\Support\Facades\Storage::url($post->coverMedia->url) }}" alt="{{ $post->coverMedia->alt_text }}" class="mt-7 max-h-[480px] w-full rounded-[1.7rem] object-cover" fetchpriority="high">@endif</div></header>

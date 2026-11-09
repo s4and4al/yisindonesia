@@ -10,6 +10,11 @@
     <meta property="og:title" content="@yield('title', 'YISI — Investasi Sosial Indonesia')">
     <meta property="og:description" content="@yield('description', 'Bersama komunitas, menumbuhkan masa depan yang tangguh dan inklusif.')">
     <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    @hasSection('og_image')
+        <meta property="og:image" content="@yield('og_image')">
+        <meta name="twitter:card" content="summary_large_image">
+    @endif
     @if (request()->routeIs('news.show'))
         <link rel="alternate" type="application/rss+xml" title="RSS Berita YISI" href="{{ route('news.feed') }}">
     @endif
