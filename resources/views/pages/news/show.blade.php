@@ -3,7 +3,7 @@
 @section('description', $post->seo_description ?: ($post->excerpt ?? ''))
 @section('og_type', 'article')
 @if ($post->coverMedia && $post->coverMedia->consent_ok && str_starts_with($post->coverMedia->mime_type, 'image/'))
-    @section('og_image', \Illuminate\Support\Facades\Storage::url($post->coverMedia->url))
+    @section('og_image', \Illuminate\Support\Facades\Storage::disk('public')->url($post->coverMedia->url))
 @endif
 @section('content')
     <article>

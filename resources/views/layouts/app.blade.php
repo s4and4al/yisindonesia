@@ -144,7 +144,7 @@
                     <form method="POST" action="{{ route('newsletter.subscribe') }}" class="grid gap-3">
                         @csrf
                         <label class="sr-only" for="newsletter-email">Alamat email untuk langganan kabar</label>
-                        <input id="newsletter-email" name="email" type="email" required maxlength="190" placeholder="Alamat email" class="focus-ring rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/55">
+                        <input id="newsletter-email" name="email" type="email" required maxlength="190" placeholder="Alamat email" class="focus-ring w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/55">
                         <label class="flex items-start gap-2 text-xs leading-5 text-white/70"><input type="checkbox" name="consent" value="1" required class="mt-1 accent-[#f2b01e]">Saya setuju menerima kabar YISI dan memahami <a href="{{ route('privacy') }}" class="underline">kebijakan privasi</a>.</label>
                         <button class="focus-ring w-fit rounded-full bg-[#f2b01e] px-4 py-3 text-xs font-extrabold text-[#103d2b] hover:bg-[#ffd15a]">Berlangganan</button>
                     </form>
