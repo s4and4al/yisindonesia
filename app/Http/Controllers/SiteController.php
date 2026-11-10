@@ -10,21 +10,29 @@ use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\Program;
 use App\Models\Tag;
+use App\Models\TeamMember;
 use App\Models\Testimonial;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class SiteController extends Controller
 {
     public function home(): View
     {
+        $programs = Program::published()->with(['pillars', 'coverMedia'])->where('is_featured', true)->latest('year_start')->take(3)->get();
+        $posts = Post::published()->with(['category', 'coverMedia'])->latest('published_at')->take(3)->get();
+
         return view('pages.home', [
             'pillars' => Pillar::query()->orderBy('sort_order')->get(),
-            'programs' => Program::published()->with(['pillars', 'coverMedia'])->where('is_featured', true)->latest('year_start')->take(3)->get(),
-            'posts' => Post::published()->with(['category', 'coverMedia'])->latest('published_at')->take(3)->get(),
+            'programs' => $programs,
+            'posts' => $posts,
+            'heroSlides' => $posts->concat($programs)
+                ->filter(fn (Post|Program $content): bool => $content->coverMedia?->consent_ok && str_starts_with($content->coverMedia->mime_type, 'image/'))
+                ->take(5)
+                ->values(),
             'testimonials' => Testimonial::approved()->with('photo')->latest()->take(6)->get(),
         ]);
     }
@@ -168,7 +176,7 @@ class SiteController extends Controller
     public function team(): View
     {
         return view('pages.team', [
-            'members' => \App\Models\TeamMember::query()
+            'members' => TeamMember::query()
                 ->with('photo')
                 ->where('is_visible', true)
                 ->orderBy('sort_order')

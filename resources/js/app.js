@@ -1,11 +1,10 @@
-// Slider hero berita (halaman /berita)
-function initNewsHero() {
-    document.querySelectorAll('[data-news-hero]').forEach(function (root) {
-        const track = root.querySelector('[data-news-hero-track]');
-        const slides = root.querySelectorAll('[data-news-slide]');
-        const dots = root.querySelectorAll('[data-news-hero-dot]');
-        const prev = root.querySelector('[data-news-hero-prev]');
-        const next = root.querySelector('[data-news-hero-next]');
+function initHeroCarousels() {
+    document.querySelectorAll('[data-hero-carousel]').forEach(function (root) {
+        const track = root.querySelector('[data-hero-track]');
+        const slides = root.querySelectorAll('[data-hero-slide]');
+        const dots = root.querySelectorAll('[data-hero-dot]');
+        const prev = root.querySelector('[data-hero-prev]');
+        const next = root.querySelector('[data-hero-next]');
         let index = 0;
         let timer = null;
 
@@ -15,7 +14,7 @@ function initNewsHero() {
             index = (i + slides.length) % slides.length;
             track.style.transform = 'translateX(-' + (index * 100) + '%)';
             dots.forEach(function (dot, di) {
-                dot.className = 'h-2 rounded-full bg-white transition-all ' + (di === index ? 'w-6 opacity-100' : 'w-2 opacity-50');
+                dot.className = 'focus-ring h-2 rounded-full bg-white transition-all ' + (di === index ? 'w-6 opacity-100' : 'w-2 opacity-50');
             });
         }
 
@@ -45,4 +44,4 @@ function initNewsHero() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', initNewsHero);
+document.addEventListener('DOMContentLoaded', initHeroCarousels);

@@ -2,43 +2,47 @@
 
 @section('title', 'YISI — Ketahanan tumbuh dari komunitas')
 @section('content')
-    <section class="relative overflow-hidden bg-[#f1f3e9]">
-        <div class="absolute inset-y-0 right-0 hidden w-[52%] bg-[#e7eddf] lg:block"></div>
-        <div class="container-wide relative grid min-h-[600px] items-center gap-8 py-12 lg:grid-cols-[1.1fr_.9fr] lg:py-16">
-            <div class="relative z-10 max-w-2xl">
-                <p class="eyebrow flex items-center gap-3"><span class="h-px w-8 bg-[#a3131b]"></span> Yayasan Investasi Sosial Indonesia</p>
-                <h1 class="serif mt-7 text-[clamp(3.4rem,7.4vw,6.6rem)] leading-[.96] text-[#143d2b]">Ketahanan sejati <em class="font-normal text-[#a3131b]">tumbuh</em> dari komunitas.</h1>
-                <p class="mt-7 max-w-xl text-lg leading-8 text-[#52645a]">Bersama masyarakat, kami menumbuhkan ekonomi yang inklusif, lingkungan yang regeneratif, dan pendidikan yang emansipatoris.</p>
+    <section class="relative isolate h-[78vh] min-h-[700px] max-h-[860px] overflow-hidden bg-[#103d2b] sm:min-h-[500px]" data-hero-carousel role="region" aria-label="Sorotan YISI">
+        @if ($heroSlides->isNotEmpty())
+            <div class="absolute inset-0 flex transition-transform duration-700 ease-out" data-hero-track>
+                @foreach ($heroSlides as $slide)
+                    <div class="relative h-[78vh] min-h-[700px] max-h-[860px] w-full shrink-0 sm:min-h-[500px]" data-hero-slide>
+                        <img src="{{ \Illuminate\Support\Facades\Storage::url($slide->coverMedia->url) }}" alt="" class="absolute inset-0 h-full w-full object-cover" loading="{{ $loop->first ? 'eager' : 'lazy' }}" decoding="async">
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="soft-grid absolute inset-0 opacity-30"></div>
+        @endif
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0c3f2b]/90 via-[#0c3f2b]/60 to-[#0c3f2b]/15"></div>
+        <div class="container-wide relative z-10 flex h-full items-start pt-20 pb-16 sm:items-center sm:py-12 lg:py-16">
+            <div class="max-w-3xl text-white">
+                <p class="flex items-center gap-3 text-xs font-extrabold uppercase tracking-[.18em] text-[#f2b01e]"><span class="h-px w-8 bg-[#f2b01e]"></span> Yayasan Investasi Sosial Indonesia</p>
+                <h1 class="serif mt-7 text-[clamp(2rem,4.2vw,3.75rem)] leading-[1.05]">Selamat datang di halaman Yayasan Investasi Sosial Indonesia.</h1>
+                <p class="mt-7 max-w-xl text-lg leading-8 text-white/85">Bersama masyarakat, kami menumbuhkan ekonomi yang inklusif, lingkungan yang regeneratif, dan pendidikan yang emansipatoris.</p>
                 <div class="mt-9 flex flex-wrap items-center gap-4">
                     <a href="{{ route('about') }}" class="focus-ring inline-flex items-center rounded-full bg-[#a3131b] px-6 py-4 text-sm font-bold text-white no-underline transition hover:bg-[#7f0d14]">Kenali perjalanan kami <span class="ml-3" aria-hidden="true">↗</span></a>
-                    <a href="{{ route('programs.index') }}" class="focus-ring rounded-full px-4 py-4 text-sm font-bold text-[#17633f] no-underline hover:underline">Jelajahi program</a>
+                    <a href="{{ route('programs.index') }}" class="focus-ring rounded-full px-4 py-4 text-sm font-bold text-white no-underline hover:underline">Jelajahi program</a>
                 </div>
-                <div class="mt-14 flex items-center gap-4 border-t border-[#cbd6c8] pt-5 text-xs font-semibold text-[#64736b]">
+                <div class="mt-14 flex items-center gap-4 border-t border-white/30 pt-5 text-xs font-semibold text-white/80">
                     <span class="flex -space-x-2" aria-hidden="true"><i class="h-7 w-7 rounded-full border-2 border-[#f1f3e9] bg-[#f2b01e]"></i><i class="h-7 w-7 rounded-full border-2 border-[#f1f3e9] bg-[#17633f]"></i><i class="h-7 w-7 rounded-full border-2 border-[#f1f3e9] bg-[#a3131b]"></i></span>
                     <span>Berakar di Pasuruan, bertumbuh bersama komunitas.</span>
                 </div>
             </div>
-            <div class="relative mx-auto aspect-square w-full max-w-[490px]" aria-label="Ilustrasi tiga pilar YISI">
-                <div class="absolute inset-[10%] rounded-full border border-[#17633f]/20"></div>
-                <div class="absolute inset-[22%] rounded-full border border-dashed border-[#17633f]/30"></div>
-                <div class="absolute inset-[35%] rounded-full bg-[#f8f8f3] shadow-[0_25px_80px_rgba(17,62,43,.14)]"></div>
-                <div class="absolute left-1/2 top-1/2 grid h-32 w-32 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-[#17633f] text-center text-white shadow-xl shadow-[#17633f]/20 sm:h-40 sm:w-40">
-                    <span><strong class="serif block text-5xl">YISI</strong><small class="mt-2 block text-[.58rem] font-bold uppercase tracking-[.18em] text-white/75">Investasi sosial</small></span>
-                </div>
-                <div class="absolute left-[6%] top-[20%] grid h-28 w-28 place-items-center rounded-full bg-[#f2b01e] text-center shadow-lg shadow-[#8a6514]/15 sm:h-36 sm:w-36">
-                    <span class="text-xs font-extrabold leading-5 text-[#3d3213]">Ekonomi<br>inklusif</span>
-                </div>
-                <div class="absolute right-[4%] top-[19%] grid h-28 w-28 place-items-center rounded-full bg-[#a3131b] text-center shadow-lg shadow-[#a3131b]/20 sm:h-36 sm:w-36">
-                    <span class="text-xs font-extrabold leading-5 text-white">Lingkungan<br>regeneratif</span>
-                </div>
-                <div class="absolute bottom-[6%] left-1/2 grid h-28 w-28 -translate-x-1/2 place-items-center rounded-full bg-[#dce9dc] text-center shadow-lg sm:h-36 sm:w-36">
-                    <span class="text-xs font-extrabold leading-5 text-[#17633f]">Pendidikan<br>emansipatoris</span>
-                </div>
-                <span class="absolute right-[16%] top-[5%] h-4 w-4 rounded-full bg-[#f2b01e]"></span>
-                <span class="absolute bottom-[20%] left-[5%] h-3 w-3 rounded-full bg-[#a3131b]"></span>
-            </div>
         </div>
-        <div class="absolute bottom-0 left-0 h-1 w-1/3 bg-[#f2b01e]"></div><div class="absolute bottom-0 left-1/3 h-1 w-1/3 bg-[#17633f]"></div><div class="absolute bottom-0 right-0 h-1 w-1/3 bg-[#a3131b]"></div>
+        @if ($heroSlides->count() > 1)
+            <button type="button" data-hero-prev class="focus-ring absolute left-4 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[#17633f] shadow transition hover:bg-white sm:left-8" aria-label="Slide sebelumnya">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button type="button" data-hero-next class="focus-ring absolute right-4 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[#17633f] shadow transition hover:bg-white sm:right-8" aria-label="Slide berikutnya">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+            <div class="absolute bottom-5 right-6 z-20 flex items-center gap-2 sm:right-10" aria-label="Pilih slide">
+                @foreach ($heroSlides as $index => $slide)
+                    <button type="button" data-hero-dot class="focus-ring h-2 w-2 rounded-full bg-white opacity-50 transition-all" aria-label="Tampilkan slide {{ $index + 1 }}"></button>
+                @endforeach
+            </div>
+        @endif
     </section>
 
     <section class="border-b border-[#e3e7de] bg-white">

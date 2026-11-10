@@ -2,11 +2,11 @@
 @section('title', 'Berita & Cerita — YISI')
 @section('content')
     @if ($heroPosts->isNotEmpty())
-        <section class="relative" data-news-hero>
+        <section class="relative" data-hero-carousel>
             <div class="relative overflow-hidden">
-                <div class="flex transition-transform duration-700 ease-out" data-news-hero-track>
+                <div class="flex transition-transform duration-700 ease-out" data-hero-track>
                     @foreach ($heroPosts as $post)
-                        <a href="{{ route('news.show', $post) }}" class="relative flex h-[70vh] min-h-[420px] w-full shrink-0 items-end no-underline" data-news-slide>
+                        <a href="{{ route('news.show', $post) }}" class="relative flex h-[70vh] min-h-[420px] w-full shrink-0 items-end no-underline" data-hero-slide>
                             @if ($post->coverMedia && $post->coverMedia->consent_ok && str_starts_with($post->coverMedia->mime_type, 'image/'))
                                 <img src="{{ \Illuminate\Support\Facades\Storage::url($post->coverMedia->url) }}" alt="{{ $post->coverMedia->alt_text }}" class="absolute inset-0 h-full w-full object-cover" loading="{{ $loop->first ? 'eager' : 'lazy' }}" decoding="async">
                             @else
@@ -22,11 +22,11 @@
                     @endforeach
                 </div>
                 @if ($heroPosts->count() > 1)
-                    <button type="button" data-news-hero-prev class="absolute left-4 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[#17633f] shadow transition hover:bg-white" aria-label="Sebelumnya"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="m15 18-6-6 6-6"/></svg></button>
-                    <button type="button" data-news-hero-next class="absolute right-4 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[#17633f] shadow transition hover:bg-white" aria-label="Berikutnya"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="m9 18 6-6-6-6"/></svg></button>
-                    <div class="absolute bottom-4 right-6 z-10 flex items-center gap-2" data-news-hero-dots>
+                    <button type="button" data-hero-prev class="absolute left-4 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[#17633f] shadow transition hover:bg-white" aria-label="Sebelumnya"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="m15 18-6-6 6-6"/></svg></button>
+                    <button type="button" data-hero-next class="absolute right-4 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-[#17633f] shadow transition hover:bg-white" aria-label="Berikutnya"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="m9 18 6-6-6-6"/></svg></button>
+                    <div class="absolute bottom-4 right-6 z-10 flex items-center gap-2" data-hero-dots>
                         @foreach ($heroPosts as $index => $post)
-                            <button type="button" data-news-hero-dot class="h-2 w-2 rounded-full bg-white opacity-50 transition-all" aria-label="Slide {{ $index + 1 }}"></button>
+                            <button type="button" data-hero-dot class="h-2 w-2 rounded-full bg-white opacity-50 transition-all" aria-label="Slide {{ $index + 1 }}"></button>
                         @endforeach
                     </div>
                 @endif
