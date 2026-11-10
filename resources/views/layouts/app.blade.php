@@ -32,13 +32,17 @@
     <header class="relative z-20 border-b border-[#e3e7de] bg-[#f8f8f3]/95">
         <div class="container-wide flex min-h-[82px] items-center justify-between gap-6">
             <a href="{{ route('home') }}" class="focus-ring flex items-center gap-3 rounded-md no-underline" aria-label="YISI, halaman utama">
-                <span class="relative grid h-11 w-11 place-items-center rounded-full bg-[#17633f] text-sm font-black tracking-tight text-white">
-                    Y<span class="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-[#f2b01e]"></span>
-                </span>
-                <span class="leading-tight">
-                    <span class="block text-lg font-extrabold tracking-[-.04em]">YISI</span>
-                    <span class="block text-[.61rem] font-semibold tracking-[.12em] text-[#65736b]">INVESTASI SOSIAL INDONESIA</span>
-                </span>
+                @if (filled($brandLogoUrl))
+                    <img src="{{ $brandLogoUrl }}" alt="Yayasan Investasi Sosial Indonesia" class="max-h-11 max-w-[13rem] object-contain">
+                @else
+                    <span class="relative grid h-11 w-11 place-items-center rounded-full bg-[#17633f] text-sm font-black tracking-tight text-white">
+                        Y<span class="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-[#f2b01e]"></span>
+                    </span>
+                    <span class="leading-tight">
+                        <span class="block text-lg font-extrabold tracking-[-.04em]">YISI</span>
+                        <span class="block text-[.61rem] font-semibold tracking-[.12em] text-[#65736b]">INVESTASI SOSIAL INDONESIA</span>
+                    </span>
+                @endif
             </a>
             <nav class="hidden items-center gap-2 text-[.88rem] font-semibold lg:flex" aria-label="Navigasi utama">
                 <a href="{{ route('about') }}" @class([
@@ -125,8 +129,12 @@
         <div class="container-wide grid gap-8 py-10 md:grid-cols-[1.2fr_.8fr_.8fr]">
             <div>
                 <a href="{{ route('home') }}" class="inline-flex items-center gap-3 text-white no-underline">
-                    <span class="grid h-11 w-11 place-items-center rounded-full bg-[#f2b01e] font-black text-[#103d2b]">Y</span>
-                    <span><strong class="block text-lg">YISI</strong><small class="text-xs text-white/65">Investasi Sosial Indonesia</small></span>
+                    @if (filled($brandLogoUrl))
+                        <img src="{{ $brandLogoUrl }}" alt="Yayasan Investasi Sosial Indonesia" class="max-h-11 max-w-[13rem] rounded-lg bg-white px-2 py-1 object-contain">
+                    @else
+                        <span class="grid h-11 w-11 place-items-center rounded-full bg-[#f2b01e] font-black text-[#103d2b]">Y</span>
+                        <span><strong class="block text-lg">YISI</strong><small class="text-xs text-white/65">Investasi Sosial Indonesia</small></span>
+                    @endif
                 </a>
                 <p class="mt-5 max-w-sm text-sm leading-7 text-white/70">Bersama komunitas, menumbuhkan ketahanan yang inklusif, berkeadilan, dan berakar pada kearifan lokal.</p>
             </div>
