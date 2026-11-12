@@ -44,4 +44,72 @@ function initHeroCarousels() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', initHeroCarousels);
+function initTeamCarousels() {
+    document.querySelectorAll('[data-team-carousel]').forEach(function (root) {
+        const viewport = root.querySelector('[data-team-viewport]');
+        const track = root.querySelector('[data-team-track]');
+        const slides = root.querySelectorAll('[data-team-slide]');
+        const prev = root.querySelector('[data-team-prev]');
+        const next = root.querySelector('[data-team-next]');
+        const progress = root.querySelector('[data-team-progress]');
+        const progressFill = root.querySelector('.team-carousel__progress-fill');
+
+        if (!viewport || !track || slides.length === 0) return;
+
+        let index = Math.floor(slides.length / 2);
+
+        function update() {
+            const activeSlide = slides[index];
+            const slideCenter = activeSlide.offsetLeft + activeSlide.offsetWidth / 2;
+            const offset = viewport.clientWidth / 2 - slideCenter;
+
+            track.style.transform = 'translateX(' + offset + 'px)';
+            slides.forEach(function (slide, slideIndex) {
+                const isActive = slideIndex === index;
+                slide.classList.toggle('is-active', isActive);
+                slide.setAttribute('aria-current', isActive ? 'true' : 'false');
+            });
+
+            if (prev) prev.disabled = index === 0;
+            if (next) next.disabled = index === slides.length - 1;
+            if (progress) progress.setAttribute('aria-valuenow', String(index + 1));
+            if (progressFill) progressFill.style.width = ((index + 1) / slides.length * 100) + '%';
+
+            root.dataset.ready = 'true';
+        }
+
+        if (prev) {
+            prev.addEventListener('click', function () {
+                index = Math.max(0, index - 1);
+                update();
+            });
+        }
+
+        if (next) {
+            next.addEventListener('click', function () {
+                index = Math.min(slides.length - 1, index + 1);
+                update();
+            });
+        }
+
+        viewport.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowLeft' && index > 0) {
+                event.preventDefault();
+                index -= 1;
+                update();
+            } else if (event.key === 'ArrowRight' && index < slides.length - 1) {
+                event.preventDefault();
+                index += 1;
+                update();
+            }
+        });
+
+        window.addEventListener('resize', update);
+        update();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    initHeroCarousels();
+    initTeamCarousels();
+});

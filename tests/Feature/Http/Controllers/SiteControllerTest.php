@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\Media;
 use App\Models\Post;
 use App\Models\SiteSetting;
+use App\Models\TeamMember;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -147,6 +148,47 @@ class SiteControllerTest extends TestCase
 
         $response->assertOk()
             ->assertSee('Ketahanan berawal dari kekuatan yang telah ada.');
+    }
+
+    public function test_team_page_shows_visible_members_in_an_interactive_carousel(): void
+    {
+        TeamMember::query()->create([
+            'name' => 'Anggota pertama',
+            'position' => 'Koordinator program',
+            'group_name' => 'Tim program',
+            'sort_order' => 1,
+        ]);
+        TeamMember::query()->create([
+            'name' => 'Anggota kedua',
+            'position' => 'Direktur',
+            'group_name' => 'Pengurus',
+            'sort_order' => 2,
+        ]);
+        TeamMember::query()->create([
+            'name' => 'Anggota tersembunyi',
+            'position' => 'Staf',
+            'group_name' => 'Tim program',
+            'is_visible' => false,
+        ]);
+
+        $response = $this->get(route('team'));
+
+        $response->assertOk()
+            ->assertSee('data-team-carousel', false)
+            ->assertSee('data-team-prev', false)
+            ->assertSee('data-team-next', false)
+            ->assertSee('Anggota pertama')
+            ->assertSee('Anggota kedua')
+            ->assertDontSee('Anggota tersembunyi');
+    }
+
+    public function test_team_page_shows_the_empty_state_when_no_members_are_visible(): void
+    {
+        $response = $this->get(route('team'));
+
+        $response->assertOk()
+            ->assertSee('Struktur tim akan segera diperbarui.')
+            ->assertDontSee('data-team-carousel', false);
     }
 
     private function createImage(bool $consentOk): Media
