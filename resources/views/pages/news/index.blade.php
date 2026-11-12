@@ -15,7 +15,7 @@
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0c3f2b]/90 via-[#0c3f2b]/40 to-transparent"></div>
                             <div class="container-wide relative pb-10 sm:pb-14">
                                 <p class="text-xs font-bold uppercase tracking-[.16em] text-[#f2b01e]">{{ $post->category?->name ?? 'Jurnal YISI' }} · {{ $post->published_at?->translatedFormat('d F Y') }}</p>
-                                <h2 class="serif mt-3 max-w-4xl text-3xl leading-tight text-white sm:text-6xl">{{ $post->title }}</h2>
+                                <h2 class="serif mt-3 line-clamp-2 max-w-4xl text-3xl leading-tight text-white sm:text-6xl">{{ $post->title }}</h2>
                                 @if ($post->excerpt)<p class="mt-4 hidden max-w-2xl text-base leading-7 text-white/80 sm:block">{{ $post->excerpt }}</p>@endif
                             </div>
                         </a>

@@ -47,6 +47,25 @@ class SiteControllerTest extends TestCase
         $this->assertSame(2, substr_count($response->getContent(), 'data-hero-slide'));
     }
 
+    public function test_news_slide_limits_long_headlines_to_two_lines(): void
+    {
+        $title = 'Cerita panjang tentang perubahan yang tumbuh bersama masyarakat dan menguatkan ketahanan komunitas di berbagai wilayah Indonesia';
+
+        Post::query()->create([
+            'title' => $title,
+            'slug' => 'cerita-perubahan-komunitas',
+            'content' => 'Isi berita',
+            'status' => 'published',
+            'published_at' => now()->subMinute(),
+        ]);
+
+        $response = $this->get(route('news.index'));
+
+        $response->assertOk()
+            ->assertSee('line-clamp-2', false)
+            ->assertSee($title);
+    }
+
     public function test_public_header_uses_the_configured_site_logo(): void
     {
         $logoPath = 'branding/yisi-logo.png';
