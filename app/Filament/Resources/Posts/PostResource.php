@@ -67,7 +67,7 @@ class PostResource extends Resource
                     ->fileAttachmentsDirectory('news')
                     ->fileAttachmentsAcceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp'])
                     ->fileAttachmentsMaxSize(5120)
-                    ->helperText('Gunakan Pratinjau untuk melihat gambar yang ada. Hapus sintaks gambar untuk menghapusnya, atau hapus gambar lama lalu unggah gambar baru untuk menggantinya.')
+                    ->helperText('Atur lebar gambar dengan menambahkan {width=600} setelah sintaks gambar (angka dalam piksel), misalnya ![Deskripsi](/storage/news/gambar.png){width=600}. Hapus atribut width untuk mengembalikan ukuran otomatis.')
                     ->columnSpanFull(),
                 static::mediaUpload('cover_media_id', 'Gambar utama', 'Gambar utama artikel'),
                 Select::make('category_id')

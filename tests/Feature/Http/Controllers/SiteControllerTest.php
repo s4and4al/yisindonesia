@@ -66,6 +66,39 @@ class SiteControllerTest extends TestCase
             ->assertSee($title);
     }
 
+    public function test_published_news_image_can_be_resized_using_markdown_width(): void
+    {
+        $post = Post::query()->create([
+            'title' => 'Berita dengan gambar berukuran khusus',
+            'slug' => 'berita-gambar-ukuran-khusus',
+            'content' => '![Foto kegiatan](/storage/news/foto.png){width=600}',
+            'status' => 'published',
+            'published_at' => now()->subMinute(),
+        ]);
+
+        $response = $this->get(route('news.show', $post));
+
+        $response->assertOk()
+            ->assertSee('<img width="600" src="/storage/news/foto.png" alt="Foto kegiatan" />', false);
+    }
+
+    public function test_published_news_image_does_not_render_unapproved_markdown_attributes(): void
+    {
+        $post = Post::query()->create([
+            'title' => 'Berita dengan atribut gambar',
+            'slug' => 'berita-atribut-gambar',
+            'content' => '![Foto kegiatan](/storage/news/foto.png){width=600 onerror=alert(1)}',
+            'status' => 'published',
+            'published_at' => now()->subMinute(),
+        ]);
+
+        $response = $this->get(route('news.show', $post));
+
+        $response->assertOk()
+            ->assertSee('<img width="600" src="/storage/news/foto.png" alt="Foto kegiatan" />', false)
+            ->assertDontSee('onerror', false);
+    }
+
     public function test_public_header_uses_the_configured_site_logo(): void
     {
         $logoPath = 'branding/yisi-logo.png';
