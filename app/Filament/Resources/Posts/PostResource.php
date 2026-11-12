@@ -108,6 +108,7 @@ class PostResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('title')->label('Judul')->searchable()->sortable()->limit(55),
                 TextColumn::make('category.name')->label('Kategori')->placeholder('—'),

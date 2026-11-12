@@ -56,6 +56,7 @@ class DocumentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('title')->label('Dokumen')->searchable()->sortable(),
                 TextColumn::make('doc_type')->label('Jenis')->badge(),

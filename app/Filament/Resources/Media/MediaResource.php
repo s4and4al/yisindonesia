@@ -54,6 +54,7 @@ class MediaResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('file_name')->label('File')->searchable()->limit(45),
                 TextColumn::make('mime_type')->label('Jenis')->badge(),

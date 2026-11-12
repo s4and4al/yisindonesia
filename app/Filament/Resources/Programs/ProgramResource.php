@@ -75,6 +75,7 @@ class ProgramResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('title')->label('Program')->searchable()->sortable()->limit(55),
                 TextColumn::make('location')->label('Lokasi')->placeholder('—'),

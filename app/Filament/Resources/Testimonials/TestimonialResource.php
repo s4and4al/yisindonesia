@@ -63,6 +63,7 @@ class TestimonialResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 ImageColumn::make('photo.url')->label('Foto')->disk('public')->circular()->size(40),
                 TextColumn::make('name')->label('Nama')->searchable()->sortable(),

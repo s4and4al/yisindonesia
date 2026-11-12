@@ -42,6 +42,7 @@ class SubscriberResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('email')->label('Email')->searchable()->sortable(),
                 TextColumn::make('name')->label('Nama')->placeholder('—'),

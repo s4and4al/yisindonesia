@@ -47,6 +47,7 @@ class OfficeResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')->label('Kantor')->searchable()->sortable(),
                 TextColumn::make('address')->label('Alamat')->limit(60),

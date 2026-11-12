@@ -51,6 +51,35 @@ class PostResourceTest extends TestCase
         );
     }
 
+    public function test_admin_post_list_shows_newest_records_first_by_default(): void
+    {
+        Storage::fake('public');
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->travelTo('2026-11-12 10:00:00');
+        $olderPost = Post::query()->create([
+            'title' => 'Artikel lama',
+            'slug' => 'artikel-lama',
+            'content' => 'Isi artikel.',
+            'status' => 'draft',
+        ]);
+
+        $this->travelTo('2026-11-13 10:00:00');
+        $newerPost = Post::query()->create([
+            'title' => 'Artikel terbaru',
+            'slug' => 'artikel-terbaru',
+            'content' => 'Isi artikel.',
+            'status' => 'draft',
+        ]);
+
+        $livewire = Livewire::actingAs($admin)->test(ManagePosts::class);
+
+        $this->assertSame(
+            [$newerPost->id, $olderPost->id],
+            $livewire->instance()->getTableRecords()->getCollection()->pluck('id')->all(),
+        );
+    }
+
     public function test_editing_a_post_loads_existing_markdown_images_and_can_replace_them(): void
     {
         Storage::fake('public');
