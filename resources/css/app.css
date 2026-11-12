@@ -69,11 +69,6 @@ body {
     outline-offset: 4px;
 }
 
-.team-page-stage {
-    background-color: #171b19;
-    background-image: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, .16), transparent 48%), linear-gradient(135deg, #171b19, #242925 52%, #111412);
-}
-
 .team-carousel__viewport {
     overflow-x: auto;
     scrollbar-width: none;
