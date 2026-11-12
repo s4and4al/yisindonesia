@@ -16,6 +16,7 @@ trait UsesMediaUpload
             ->image()
             ->disk('public')
             ->directory('media')
+            ->fetchFileInformation(false)
             ->maxSize(2048)
             ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) use ($altText): string {
                 $path = $file->store('media', 'public');
