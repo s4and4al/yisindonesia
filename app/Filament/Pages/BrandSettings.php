@@ -42,6 +42,7 @@ class BrandSettings extends Page
 
         $this->form->fill([
             'logo_path' => $setting?->value['logo_path'] ?? null,
+            'about_image_path' => $setting?->value['about_image_path'] ?? null,
         ]);
     }
 
@@ -58,6 +59,15 @@ class BrandSettings extends Page
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->maxSize(2048)
                     ->helperText('Format JPG, PNG, atau WebP. Ukuran maksimal 2 MB.'),
+                FileUpload::make('about_image_path')
+                    ->label('Gambar halaman Tentang')
+                    ->image()
+                    ->disk('public')
+                    ->directory('branding')
+                    ->visibility('public')
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->maxSize(5120)
+                    ->helperText('Gambar ini menggantikan judul “Ketahanan berawal dari kekuatan yang telah ada” di halaman Tentang. Maksimal 5 MB.'),
             ])
             ->statePath('data');
     }
@@ -68,12 +78,15 @@ class BrandSettings extends Page
 
         SiteSetting::query()->updateOrCreate(
             ['key' => 'branding'],
-            ['value' => ['logo_path' => $data['logo_path'] ?? null]],
+            ['value' => [
+                'logo_path' => $data['logo_path'] ?? null,
+                'about_image_path' => $data['about_image_path'] ?? null,
+            ]],
         );
 
         Notification::make()
             ->success()
-            ->title('Logo situs berhasil diperbarui')
+            ->title('Pengaturan visual publik berhasil diperbarui')
             ->send();
     }
 }

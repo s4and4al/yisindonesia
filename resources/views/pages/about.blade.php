@@ -11,7 +11,14 @@
     </section>
     <section class="section-pad">
         <div class="container-wide grid gap-9 lg:grid-cols-[.75fr_1.25fr]">
-            <div><p class="eyebrow">Mengapa YISI ada</p><h2 class="serif mt-4 text-4xl leading-tight">Ketahanan berawal dari kekuatan yang telah ada.</h2></div>
+            <div>
+                <p class="eyebrow">Mengapa YISI ada</p>
+                @if (filled($aboutImageUrl))
+                    <img src="{{ $aboutImageUrl }}" alt="Ketahanan berawal dari kekuatan yang telah ada" class="mt-4 max-h-80 w-full rounded-[1.7rem] object-cover">
+                @else
+                    <h2 class="serif mt-4 text-4xl leading-tight">Ketahanan berawal dari kekuatan yang telah ada.</h2>
+                @endif
+            </div>
             <div class="prose-yisi">
                 <p>YISI adalah yayasan yang berkedudukan di Kabupaten Pasuruan, Jawa Timur, dengan kantor program di Situbondo. Sejak berdiri secara hukum pada 7 April 2015, YISI bekerja bersama masyarakat dan mitra untuk menjawab tantangan sosial dan lingkungan.</p>
                 <p>Kami percaya bahwa perubahan yang bertahan lama tumbuh melalui proses yang partisipatif: mendengar pengalaman warga, menghargai pengetahuan lokal, dan menghubungkan komunitas dengan sumber daya serta jejaring yang relevan.</p>

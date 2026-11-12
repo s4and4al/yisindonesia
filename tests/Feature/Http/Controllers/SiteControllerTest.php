@@ -72,6 +72,30 @@ class SiteControllerTest extends TestCase
             ->assertDontSee('branding/yisi-logo.png', false);
     }
 
+    public function test_about_page_shows_the_image_configured_by_admin_instead_of_the_heading(): void
+    {
+        $imagePath = 'branding/about-yisi.png';
+        SiteSetting::query()->create([
+            'key' => 'branding',
+            'value' => ['about_image_path' => $imagePath],
+        ]);
+
+        $response = $this->get(route('about'));
+
+        $response->assertOk()
+            ->assertSee(Storage::disk('public')->url($imagePath), false)
+            ->assertSee('alt="Ketahanan berawal dari kekuatan yang telah ada"', false)
+            ->assertDontSee('Ketahanan berawal dari kekuatan yang telah ada.</h2>', false);
+    }
+
+    public function test_about_page_keeps_the_heading_until_an_image_is_configured(): void
+    {
+        $response = $this->get(route('about'));
+
+        $response->assertOk()
+            ->assertSee('Ketahanan berawal dari kekuatan yang telah ada.');
+    }
+
     private function createImage(bool $consentOk): Media
     {
         $file = UploadedFile::fake()->image('hero.jpg');

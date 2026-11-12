@@ -9,6 +9,7 @@ use App\Models\Pillar;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\Program;
+use App\Models\SiteSetting;
 use App\Models\Tag;
 use App\Models\TeamMember;
 use App\Models\Testimonial;
@@ -16,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class SiteController extends Controller
@@ -39,7 +41,13 @@ class SiteController extends Controller
 
     public function about(): View
     {
-        return view('pages.about');
+        $aboutImagePath = SiteSetting::query()->find('branding')?->value['about_image_path'] ?? null;
+
+        return view('pages.about', [
+            'aboutImageUrl' => filled($aboutImagePath)
+                ? Storage::disk('public')->url($aboutImagePath)
+                : null,
+        ]);
     }
 
     public function pillars(): View

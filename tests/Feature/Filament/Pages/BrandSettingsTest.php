@@ -34,6 +34,30 @@ class BrandSettingsTest extends TestCase
         Storage::disk('public')->assertExists($setting->value['logo_path']);
     }
 
+    public function test_admin_can_save_an_about_image_without_removing_the_site_logo(): void
+    {
+        Storage::fake('public');
+        $admin = User::factory()->create(['role' => 'admin']);
+        UploadedFile::fake()->image('existing-logo.png')->storeAs('branding', 'existing-logo.png', 'public');
+        SiteSetting::query()->create([
+            'key' => 'branding',
+            'value' => ['logo_path' => 'branding/existing-logo.png'],
+        ]);
+        $image = UploadedFile::fake()->image('about.png', 1200, 800);
+
+        Livewire::actingAs($admin)
+            ->test(BrandSettings::class)
+            ->set('data.about_image_path', $image)
+            ->call('save')
+            ->assertHasNoErrors();
+
+        $setting = SiteSetting::query()->findOrFail('branding');
+
+        $this->assertSame('branding/existing-logo.png', $setting->value['logo_path']);
+        $this->assertIsString($setting->value['about_image_path']);
+        Storage::disk('public')->assertExists($setting->value['about_image_path']);
+    }
+
     #[DataProvider('unauthorizedRoles')]
     public function test_non_admin_cannot_access_logo_settings(string $role): void
     {
