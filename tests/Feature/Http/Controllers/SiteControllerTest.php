@@ -137,6 +137,7 @@ class SiteControllerTest extends TestCase
         $response->assertOk()
             ->assertSee(Storage::disk('public')->url($imagePath), false)
             ->assertSee('alt="Ketahanan berawal dari kekuatan yang telah ada"', false)
+            ->assertSee('object-contain', false)
             ->assertDontSee('Ketahanan berawal dari kekuatan yang telah ada.</h2>', false);
     }
 

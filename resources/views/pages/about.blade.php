@@ -14,7 +14,7 @@
             <div>
                 <p class="eyebrow">Mengapa YISI ada</p>
                 @if (filled($aboutImageUrl))
-                    <img src="{{ $aboutImageUrl }}" alt="Ketahanan berawal dari kekuatan yang telah ada" class="mt-4 max-h-80 w-full rounded-[1.7rem] object-cover">
+                    <img src="{{ $aboutImageUrl }}" alt="Ketahanan berawal dari kekuatan yang telah ada" class="mt-4 max-h-80 w-full rounded-[1.7rem] object-contain">
                 @else
                     <h2 class="serif mt-4 text-4xl leading-tight">Ketahanan berawal dari kekuatan yang telah ada.</h2>
                 @endif
